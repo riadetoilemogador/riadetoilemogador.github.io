@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"> 
+
+<head> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+<title>Simple Google map</title> 
+<!-- //Change the following line to use your own key available from http://www.google.com/apis/maps/signup.html -->
+<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAARKYMX3qABRwgBGTOLfvdgBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTmhS_LQj6knfNR9GOtLZ_JFxncNQ" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+// Google Map Maker script v.3
+// (c) 2012 Richard Stephenson http://www.rpsdigital.com
+// http://mapmaker.donkeymagic.co.uk
+var map;
+var icon0;
+var newPoints = new Array();
+ 
+function addLoadEvent(func) { 
+	var oldonload = window.onload; 
+	if (typeof window.onload != 'function'){ 
+		window.onload = func
+	} else { 
+		window.onload = function() {
+			oldonload();
+			func();
+		}
+	}
+}
+ 
+addLoadEvent(loadMap);
+addLoadEvent(addPoints);
+ 
+function loadMap() {
+	map = new GMap2(document.getElementById("map"));
+	map.addControl(new GLargeMapControl());
+	map.addControl(new GMapTypeControl());
+	map.setCenter(new GLatLng(31.512217,-9.767543), 18);
+	map.setMapType(G_NORMAL_MAP);
+ 
+	icon0 = new GIcon();
+	icon0.image = "../www.google.com/mapfiles/marker.png";
+	icon0.shadow = "../www.google.com/mapfiles/shadow50.png";
+	icon0.iconSize = new GSize(20, 34);
+	icon0.shadowSize = new GSize(37, 34);
+	icon0.iconAnchor = new GPoint(9, 34);
+	icon0.infoWindowAnchor = new GPoint(9, 2);
+	icon0.infoShadowAnchor = new GPoint(18, 25);
+}
+ 
+function addPoints() {
+ 
+	newPoints[0] = new Array(31.512217,-9.767543, icon0, 'Etoile de Mogador', '8 Rue Allal El Waquawi quartier rue Agadir 44000 Essaouira Maroc www.etoiledemogador.com '); 
+ 
+	for(var i = 0; i < newPoints.length; i++) {
+		var point = new GPoint(newPoints[i][1],newPoints[i][0]);
+		var popuphtml = newPoints[i][4] ;
+		var marker = createMarker(point,newPoints[i][2],popuphtml);
+		map.addOverlay(marker);
+	}
+}
+ 
+function createMarker(point, icon, popuphtml) {
+	var popuphtml = "<div id=\"popup\">" + popuphtml + "<\/div>";
+	var marker = new GMarker(point, icon);
+	GEvent.addListener(marker, "click", function() {
+		marker.openInfoWindowHtml(popuphtml);
+	});
+	return marker;
+}
+//]]>
+</script>
+ 
+<style type="text/css">
+div#popup {
+background: #EFEFEF;
+border: 1px solid #999999;
+color: #333;
+font-family: "Trebuchet MS", Lucida, Verdana, Arial, Helvetica, sans-serif;
+font-size: 12px;
+line-height: 15px;
+margin: 0px;
+padding: 7px;
+width: 270px;
+}
+div#popup a {
+color: #1122CC;
+}
+</style>
+</head>
+<body>
+<div id="map" style="width:600px;height:450px"></div>
+</body>
+
+</html>
