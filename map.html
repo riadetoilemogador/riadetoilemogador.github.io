@@ -26,10 +26,7 @@ function addLoadEvent(func) {
 		}
 	}
 }
- 
-addLoadEvent(loadMap);
-addLoadEvent(addPoints);
- 
+
 function loadMap() {
 	map = new GMap2(document.getElementById("map"));
 	map.addControl(new GLargeMapControl());
@@ -67,6 +64,10 @@ function createMarker(point, icon, popuphtml) {
 	});
 	return marker;
 }
+
+addLoadEvent(loadMap);
+addLoadEvent(addPoints);
+	
 //]]>
 </script>
  
